@@ -1,0 +1,273 @@
+
+
+<!DOCTYPE html>
+<html>
+<title>ARTBOOK</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"> -->
+<link rel="stylesheet" type="text/css" href="/assets/css/style.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="/assets/jquery-3.4.1.min.js"></script>
+  <script>
+    
+    $(document).ready(function(){
+      
+      $('#gift').on('click' , function(){
+         var data = '<div class="w3-container w3-white"><p><b></b></p><div class="w3-section"><textarea rows="5" id="txt" cols="5" class="w3-input w3-border" name="review"></textarea></div><p><button class="w3-button w3-dark-grey w3-padding-large w3-margin-top w3-margin-bottom"><i class="fa fa-send   w3-margin-right"></i>Send </button><p></p></div>';
+          $('#gift_form').html(data);
+        
+        
+      });
+      
+    });
+  </script>
+<style>
+body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
+</style>
+<body class="w3-light-grey w3-content" style="max-width:1600px">
+
+<!-- Sidebar/menu -->
+<nav class="w3-sidebar w3-collapse w3-white w3-animate-left" style="z-index:3;width:300px;" id="mySidebar"><br>
+  <div class="w3-container">
+    <a href="#" onclick="w3_close()" class="w3-hide-large w3-right w3-jumbo w3-padding w3-hover-grey" title="close menu">
+      <i class="fa fa-remove"></i>
+    </a>
+    <img src="/assets/admin_uploads/nature.jpg" style="width:100%;" class="w3-round"><br><br>
+    <h4><b><label style="color:lightblue;">ART</label><label>BOOK</label></b></b></h4>
+    <p class="w3-text-grey">The Art Gallery For Art Lovers...</p>
+    <p class="w3-text-grey w3-right"> - By <b><span class="w3-black"> Abhi Kamalia </span></b></p>
+  </div>
+  <div class="w3-bar-block">
+    <a href="/" onclick="w3_close()" class="w3-bar-item w3-button w3-padding w3-text-teal"><i class="fa fa-th-large fa-fw w3-margin-right"></i>GALLERY</a> 
+    <a href="#about" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-info fa-fw w3-margin-right"></i>ABOUT</a> 
+    <a href="#contact" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-envelope fa-fw w3-margin-right"></i>CONTACT</a>
+    <a href="/logout" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-user fa-fw w3-margin-right"></i>LOG OUT [ <%= user_session %> ]</a>
+  </div>
+  <div class="w3-panel w3-large">
+    <i class="fa fa-facebook-official w3-hover-opacity"></i>
+    <i class="fa fa-instagram w3-hover-opacity"></i>
+    <i class="fa fa-snapchat w3-hover-opacity"></i>
+    <i class="fa fa-pinterest-p w3-hover-opacity"></i>
+    <i class="fa fa-twitter w3-hover-opacity"></i>
+    <i class="fa fa-linkedin w3-hover-opacity"></i>
+  </div>
+</nav>
+
+<!-- Overlay effect when opening sidebar on small screens -->
+<div class="w3-overlay w3-hide-large w3-animate-opacity" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
+
+<!-- !PAGE CONTENT! -->
+<div class="w3-main" style="margin-left:300px">
+
+  <!-- Header -->
+  <header id="portfolio">
+    <!-- <a href="#"><img src="/assets/admin_uploads/nature.jpg" style="width:65px;" class="w3-circle w3-right w3-margin w3-hide-large w3-hover-opacity"></a> -->
+    <span class="w3-button w3-hide-large w3-xxlarge w3-hover-text-grey" onclick="w3_open()"><i class="fa fa-bars"></i></span>
+    <div class="w3-container">
+    <h1 class="w3-black w3-center"><b><label style="color:lightblue;">ART</label><label>BOOK</label></b></h1>
+    <div class="w3-section w3-bottombar w3-padding-16">
+
+      <!-- <span class="w3-margin-right">Filter:</span>  -->
+      <!-- <button class="w3-button w3-black">ALL</button> -->
+      <a href="/" class="w3-button w3-white "><i class="fa fa-map-pin w3-margin-right"></i>Art</a>
+      <a class="w3-button w3-white "><i class="fa fa-photo w3-margin-right"></i>Photos</a>
+      <a class="w3-button w3-white "><i class="fa fa-diamond w3-margin-right"></i>Order</a>
+      <% let count = 0;
+      let count_check = false;
+        for(let i = 0 ; i < cart.length ; i++){
+          if(cart[i].username == user_session){
+              count = count+1;
+          }
+        }
+        
+      %>
+      <a href="/cart" class="w3-button w3-white "><i class="fa fa-shopping-cart w3right"></i> Cart </b> <span class="w3-tag w3-black"><%= count %></span></a>
+      
+      <a href="/user" class="w3-button w3-white "><i class="fa fa-user w3right"></i> <%= user_session %></a>
+      <% let notification = 0;
+        
+        for(let i = 0 ; i < buy_info.length ; i++){
+          if(buy_info[i].username && buy_info[i].done == 'ordered'){
+              notification = notification+1;
+          }
+        }
+        
+        
+      %>
+      <a href="/orders" class="w3-button w3-white"><i class="fa fa-bell w3right"></i> </b> <span class="w3-tag w3-black"><%= notification %></span></a>
+      
+      
+    </div>
+    </div>
+  </header>
+  
+  <!-- First Photo Grid-->
+    <%
+      let all_orders_check = false;
+      for(let i = 0 ; i < buy_info.length ; i++){
+        if(buy_info[i].username == user_session){
+          all_orders_check = true
+          break;
+        }
+        else{
+          all_orders_check = false;
+        }
+      }
+    %>
+  
+    <%
+      let cancelled_remove = false;
+      if(all_orders_check){
+      for(let i = 0 ; i < buy_info.length ; i++){
+        if(buy_info[i].username == user_session){
+          let art_id_string = buy_info[i].art_id;
+          let art_id_array = art_id_string.split(',');
+          
+        
+    %>
+      <div class="w3-row-padding">
+    <div class="w3-container w3-margin-bottom w3-bottombar">
+    <p>
+       <p>
+         
+        <%
+          
+          let total_price = 0;
+          for(let v = 0 ; v < art_id_array.length ; v++){
+            for(let w = 0 ; w < art.length ; w++){
+              if(buy_info[i].username == user_session && art[w].id == art_id_array[v]){
+              
+                total_price = total_price + art[w].price;
+                
+              }
+            }
+          }
+        %>
+        <a  href ="/orders" class="w3-button  w3-padding-large w3-margin-top w3-margin-bottom "><i class="fa fa-diamond w3-xxlarge w3-margin-right"></i></a>
+        <a   class="w3-button w3-white w3-padding-large w3-margin-top w3-margin-bottom w3-right">Total <i class="fa fa-money w3-margin-right"></i> <b><%= total_price %></b></a>
+        <a href ="" class="w3-button w3-dark-grey w3-padding-large w3-margin-top w3-margin-bottom w3-right  w3-black"><i class="fa fa-info w3-margin-right"></i><%= buy_info[i].order_id %></a>
+        <%
+            if(buy_info[i].done == 'ordered'){
+        %>
+        <a href ="/cancel_from_all_order/<%= buy_info[i].order_id %>" class="w3-button w3-black w3-padding-large w3-margin-top w3-margin-bottom w3-right  w3-black"><i class="fa fa-close w3-margin-right"></i>Cancel Order</a>
+        <%
+          }
+          else{
+        %>
+        <a href ="/reorder/<%= buy_info[i].order_id %>" class="w3-button w3-black w3-padding-large w3-margin-top w3-margin-bottom w3-right  w3-black"><i class="fa fa-shopping-cart w3-margin-right"></i>Reorder</a>
+        <a href ="/remove_from_orders/<%= buy_info[i].order_id %>" class="w3-button w3-padding-large w3-margin-top w3-margin-bottom w3-right"><i class="fa fa-close  w3-margin-right"></i></a>
+       
+        <%
+        }
+        
+        %>
+        
+        
+        
+        
+       
+      </p>
+      
+      
+    </p>
+  </div>
+</div>
+  <div class="w3-row-padding">
+     <%
+          
+          for(let j = 0 ; j < art_id_array.length ; j++){
+            for(let k = 0 ; k < art.length ; k++){
+              if(art_id_array[j] == art[k].id){
+    %>
+     
+    
+     
+    <div class="w3-third w3-container w3-margin-bottom ">
+      <!-- <a href ="/art/<%= art[j].id %>"  class="w3-button w3-dark-grey w3-padding-small w3-margin-top w3-margin-bottom">
+        <i class="fa fa-back   w3-margin-right"></i><<
+      </a> -->
+      <img src="/assets/admin_uploads/art/<%= art[k].name %>" alt="Norway" style="width:100%" class="w3-hover-opacity">
+      <div class="w3-container w3-white">
+        <p>Rs. <b><%= art[k].price %></b>
+
+        </p>
+        <p><%= art[k].description %></p>
+        
+        <p><span class="w3-tag w3-right"><%= buy_info[i].done %></span></p>
+
+      </div>
+    </div>
+    <%
+                }
+              }
+            }
+    %>
+
+  </div>
+  <br>
+  <%
+      
+      }
+    }
+  }
+    else{
+  %>
+    <div class="w3-row-padding">
+    <div class="w3-third w3-container w3-margin-bottom ">
+      <p><b>Go to <span class="w3-tag">Gallery</span></b></p>
+        <!-- <p>Seems like your cart is empty.</p> -->
+        <p>No orders yet.</p>
+        <p>See the gallery and browse what you like in there....and share among people.</p>
+    </div>
+  
+    <div class="w3-third w3-container w3-margin-bottom ">
+      <p>
+        <a href ="/" class="w3-black w3-button w3-padding-large w3-margin-top w3-margin-bottom w3-center"><i class="fa fa-home   w3-margin-right"></i> Browse more <span class="w3-tag">ART</span></a>
+      </p>
+    </div>
+    <div class="w3-third w3-container w3-margin-bottom ">
+      <p>
+        <a href ="/all_orders" class="w3-dark-grey w3-button w3-padding-large w3-margin-top w3-margin-bottom w3-center"><i class="fa fa-diamond   w3-margin-right"></i>All Orders</a>
+      </p>
+    </div>
+    </div>
+
+  <%
+  }
+  
+  %>
+  
+  <footer class="w3-black w3-center w3-padding-24">ArtBook by <a href=""  target="_blank" class="w3-hover-opacity">Abhikamalia</a></div>
+
+<!-- End page content -->
+</footer>
+</div>
+
+
+    
+
+  <!-- Footer -->
+  
+  
+  
+
+<!-- End page content -->
+</div>
+
+<script>
+// Script to open and close sidebar
+function w3_open() {
+    document.getElementById("mySidebar").style.display = "block";
+    document.getElementById("myOverlay").style.display = "block";
+}
+ 
+function w3_close() {
+    document.getElementById("mySidebar").style.display = "none";
+    document.getElementById("myOverlay").style.display = "none";
+}
+</script>
+
+</body>
+</html>
